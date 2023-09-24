@@ -1,19 +1,21 @@
-#include <stdio.h>
 #define FILAS 14
 #define POLTRONAS 10
 
 char plateia[FILAS][POLTRONAS];
-int vendidosMeia = 0;    // Contador começando em 0
-int vendidosInteira = 0; // Contador começando em 0
+int ocupadosMeia = 0;     // Contador começando em 0
+int ocupadosInteiras = 0; // Contador começando em 0
 
 void incializarLugares()
 {
+    int numeroPoltrona = 1;
     int i, j;
     for (i = 0; i < FILAS; i++)
     {
         for (int j = 0; j < POLTRONAS; j++)
         {
-            plateia[i][j] = '-';
+            plateia[i][j] = numeroPoltrona + '0';
+            numeroPoltrona++;
+            // plateia[i][j] = '-';
         }
     }
 }
@@ -34,11 +36,12 @@ void mostraPlateia()
 void venderIngresso()
 {
 
-    mostraPlateia();
     int poltrona;
 
     while (1)
     {
+
+        mostraPlateia();
         printf("Escolha sua poltrona <1..%d>: ", FILAS * POLTRONAS);
         scanf("%d", &poltrona);
 
@@ -49,7 +52,7 @@ void venderIngresso()
         }
 
         int linha = (poltrona - 1) / POLTRONAS;
-        int coluna = (poltrona - 1) / POLTRONAS;
+        int coluna = (poltrona - 1) % POLTRONAS;
 
         if (plateia[linha][coluna] == '-')
         {
@@ -65,12 +68,15 @@ void venderIngresso()
 
                 if (tipo == 'm')
                 {
-                    vendidosMeia++;
+                    ocupadosMeia++;
                 }
                 else
                 {
-                    vendidosInteira++;
+                    ocupadosInteiras++;
                 }
+
+                mostraPlateia(); // Mostra a plateia atualizada
+                break;           // Sai do loop e volta para o meno anterior
             }
             else
             {
@@ -86,30 +92,30 @@ void venderIngresso()
 
 void mostrarOcupacao()
 {
-    int totalIngressos = FILAS * POLTRONAS;
-    int ocupados = vendidosMeia = vendidosInteira;
-    int livres = totalIngressos - ocupados;
-
+    int totallingressos = FILAS * POLTRONAS;
     for (int i = 0; i < FILAS; i++)
     {
         for (int j = 0; j < POLTRONAS; j++)
         {
-            if (plateia[i][j] == 'm' || plateia[i][j] == 'i')
+            if (plateia[i][j] == 'm')
             {
-                printf("%2c ", plateia[i][j]);
+                ocupadosMeia++;
             }
-            else
+            else if (plateia[i][j] == 'i')
             {
-                printf("_ ");
+                ocupadosInteiras++;
             }
         }
         printf("\n");
     }
 
-    printf("Plateia possui %d lugares\n", totalIngressos);
-    printf("Foram vendidos %d ingressos, sendo:\n", ocupados);
-    printf("%d - meias\n", vendidosMeia);
-    printf("%d - inteiras\n", vendidosInteira);
+    int livres = totallingressos - (ocupadosMeia + ocupadosInteiras);
+
+    printf("Plateia possui %d lugares\n", totallingressos);
+    printf("Foram vendidos %d ingressos, sendo:\n", totallingressos);
+    printf("%d - meias\n", ocupadosMeia);
+    printf("%d - inteiras\n", ocupadosInteiras);
+    return;
 }
 
 int main()
@@ -120,10 +126,12 @@ int main()
 
     while (1)
     {
+        printf("---------------MENU---------------\n");
         printf("0 - Sair\n");
-        printf("1 - Vender ingresso\n");
+        printf("1 - Vender ingresso/ Comprar\n");
         printf("2 - Mostrar plateia\n");
         printf("3 - Mostrar ocupação\n");
+        printf("------------------------------------\n");
 
         int opcao;
         printf("Qual sua opção: ");
@@ -142,6 +150,7 @@ int main()
             break;
         case 3:
             mostrarOcupacao();
+            break; // Necesssario pois estava exibindo a msg de erro apos clicar no 03
         default:
             printf("Opção invalida. Escolha entre 0, 1, 2 ou 3.\n");
         }
