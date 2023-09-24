@@ -13,9 +13,8 @@ void incializarLugares()
     {
         for (int j = 0; j < POLTRONAS; j++)
         {
-            plateia[i][j] = numeroPoltrona + '0';
-            numeroPoltrona++;
-            // plateia[i][j] = '-';
+
+            plateia[i][j] = '-';
         }
     }
 }
@@ -92,6 +91,10 @@ void venderIngresso()
 
 void mostrarOcupacao()
 {
+
+    int ocupadosMeia = 0;
+    int ocupadosInteiras = 0;
+
     int totallingressos = FILAS * POLTRONAS;
     for (int i = 0; i < FILAS; i++)
     {
@@ -106,12 +109,15 @@ void mostrarOcupacao()
                 ocupadosInteiras++;
             }
         }
+
         printf("\n");
     }
+    mostraPlateia();
+    printf("\n");
 
     int livres = totallingressos - (ocupadosMeia + ocupadosInteiras);
 
-    printf("Plateia possui %d lugares\n", totallingressos);
+    printf("Plateia possui %d lugares\n", livres);
     printf("Foram vendidos %d ingressos, sendo:\n", totallingressos);
     printf("%d - meias\n", ocupadosMeia);
     printf("%d - inteiras\n", ocupadosInteiras);
