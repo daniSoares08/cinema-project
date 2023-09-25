@@ -116,9 +116,10 @@ void mostrarOcupacao()
     printf("\n");
 
     int livres = totallingressos - (ocupadosMeia + ocupadosInteiras);
+    int vendidos = ocupadosMeia + ocupadosInteiras;
 
     printf("Plateia possui %d lugares\n", livres);
-    printf("Foram vendidos %d ingressos, sendo:\n", totallingressos);
+    printf("Foram vendidos: %d  \n", vendidos);
     printf("%d - meias\n", ocupadosMeia);
     printf("%d - inteiras\n", ocupadosInteiras);
     return;
