@@ -7,9 +7,7 @@ int ocupadosInteiras = 0; // Contador começando em 0
 
 void incializarLugares()
 {
-    int numeroPoltrona = 1;
-    int i, j;
-    for (i = 0; i < FILAS; i++)
+    for (int i = 0; i < FILAS; i++)
     {
         for (int j = 0; j < POLTRONAS; j++)
         {
@@ -91,27 +89,8 @@ void venderIngresso()
 
 void mostrarOcupacao()
 {
-
-    int ocupadosMeia = 0;
-    int ocupadosInteiras = 0;
-
     int totallingressos = FILAS * POLTRONAS;
-    for (int i = 0; i < FILAS; i++)
-    {
-        for (int j = 0; j < POLTRONAS; j++)
-        {
-            if (plateia[i][j] == 'm')
-            {
-                ocupadosMeia++;
-            }
-            else if (plateia[i][j] == 'i')
-            {
-                ocupadosInteiras++;
-            }
-        }
 
-        printf("\n");
-    }
     mostraPlateia();
     printf("\n");
 
