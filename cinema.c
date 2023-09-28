@@ -1,3 +1,5 @@
+
+#include <stdio.h>
 #define FILAS 14
 #define POLTRONAS 10
 
