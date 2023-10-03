@@ -1,15 +1,13 @@
-
-
 #include <stdio.h>
-
 #define FILAS 14
 #define POLTRONAS 10
 
+// Definindo váriaveis globais
 char plateia[FILAS][POLTRONAS];
 int ocupadosMeia = 0;     
 int ocupadosInteiras = 0; 
 
-void incializarLugares()
+void incializarLugares() // Função para criar as poltronas, inicialmente ocupadas com "-"
 {
     for (int i = 0; i < FILAS; i++)
     {
@@ -21,18 +19,19 @@ void incializarLugares()
     }
 }
 
-void mostraPlateia(int mostrarNumeros)
+// Função para exibir todas as poltronas, sendo elas por "-", por número ou por "m" e "i"
+void mostraPlateia(int mostrarNumeros) 
 {
     printf("LUGARES:\n");
 
     for (int i = 0; i < FILAS; i++)
     {
-        for (int j = 0; j < POLTRONAS; j++)
+        for (int j = 0; j < POLTRONAS; j++) // Passa por todas as poltronas da plateia
         {   
-            if (mostrarNumeros){
+            if (mostrarNumeros){ // Verifica se deve exibir os números das poltronas ou o tipo de ingresso vendido
                 if(plateia[i][j] == 'm' || plateia[i][j] == 'i'){
                     printf("%4c", ' ');}
-                else{printf("%4d", i * POLTRONAS + j + 1);
+                else{printf("%4d", i * POLTRONAS + j + 1); 
                 }
             } else{
                 if(plateia[i][j] == 'm' || plateia[i][j] == 'i'){
@@ -54,12 +53,12 @@ void venderIngresso()
 
     while (1)
     {
+        mostraPlateia(1); // Inicia mostrando a plateia com os números das poltronas vagas
 
-        mostraPlateia(1);
         printf("Escolha sua poltrona <1..%d>: ", FILAS * POLTRONAS);
         scanf("%d", &poltrona);
 
-        if (poltrona < 1 || poltrona > FILAS * POLTRONAS)
+        if (poltrona < 1 || poltrona > FILAS * POLTRONAS)  // Verifica se a poltrona escolhida está vaga
         {
             printf("Poltrona que voce selecionou nao existe, porfavor escolha no intervado de <1..%d>. Tente novamente.", FILAS * POLTRONAS);
             continue;
@@ -68,25 +67,26 @@ void venderIngresso()
         int linha = (poltrona - 1) / POLTRONAS;
         int coluna = (poltrona - 1) % POLTRONAS;
 
-        if (plateia[linha][coluna] == '-')
+        if (plateia[linha][coluna] == '-') // A poltrona escolhida estando vaga, prosseguimos com o código
         {
 
             char tipo;
             printf("Qual o tipo, <m>eia ou <i>nteira: ");
             scanf(" %c", &tipo);
 
-            if (tipo == 'm' || tipo == 'i')
+            if (tipo == 'm' || tipo == 'i') // Verifica o tipo de ingresso e define na matriz de poltronas
             {
                 plateia[linha][coluna] = tipo;
                 printf("Compra feita com sucesso!\n");
 
+                // Verifica o tipo do ingresso e soma a contagem de meias ou inteiras.
                 if (tipo == 'm')
                 {
-                    ocupadosMeia++;
+                    ocupadosMeia++; 
                 }
                 else
                 {
-                    ocupadosInteiras++;
+                    ocupadosInteiras++; 
                 }
 
                 mostraPlateia(1); // Mostra a plateia atualizada
@@ -104,7 +104,7 @@ void venderIngresso()
     }
 }
 
-void mostrarOcupacao()
+void mostrarOcupacao() // Verifica o total de ingressos e mostra quantos estão disponíveis de cada tipo
 {
     int totallingressos = FILAS * POLTRONAS;
 
@@ -121,23 +121,27 @@ void mostrarOcupacao()
     return;
 }
 
+// --------------PROGRAMA PRINCIPAL--------------------
 int main()
 {
     incializarLugares();
 
-    printf("------CINEMA------\n");
+    printf("-------------CINEMA-------------\n\n");
 
     while (1)
     {
-        printf("---------------MENU---------------\n");
-        printf("0 - Sair\n");
-        printf("1 - Vender ingresso/ Comprar\n");
-        printf("2 - Mostrar plateia\n");
-        printf("3 - Mostrar ocupacao\n");
-        printf("------------------------------------\n");
+        // Inicia o menu validando a entrada do usuário e inicia a função correspondente
+        printf("|-----------------------------------|\n");
+        printf("|------------   MENU   -------------|\n");
+        printf("|-----------------------------------|\n");
+        printf("|  0  | - Sair                      |\n");
+        printf("|  1  | - Vender ingresso/ Comprar  |\n");
+        printf("|  2  | - Mostrar plateia           |\n");
+        printf("|  3  | - Mostrar ocupacao          |\n");
+        printf("|-----------------------------------|\n");
 
         int opcao;
-        printf("Qual sua opcao: ");
+        printf("Qual sua opcao:  ");
         scanf("%d", &opcao);
 
         switch (opcao)
